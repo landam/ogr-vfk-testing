@@ -49,6 +49,16 @@ def fatal_error(message):
     """
     sys.exit(message + os.linesep)
 
+def check_vfk_line(idx, line):
+    """Callback function to check line from VFK file
+
+    @param idx line index
+    @param line line string
+    """
+    # TODO: implement extra checks on the line
+    print "line index: %d" % idx
+    print "line      : %s" % line
+
 def main():
     # initialize OGR library for this script
     init_ogr()
