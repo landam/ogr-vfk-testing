@@ -1,7 +1,7 @@
 #!/usr/bin/python
 """
 This script reads VFK data using OGR library. VFK data are converted
-into SQLite database. Geometry of the features is not built.
+into SQLite database.
 
 Reference: http://gdal.org/ogr/drv_vfk.html
 
