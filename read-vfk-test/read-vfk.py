@@ -52,6 +52,10 @@ def fatal_error(message):
 def check_vfk_line(idx, line):
     """Callback function to check line from VFK file
 
+    @todo Implement it as an event handler when the new line from VFK
+    file is read see:
+    http://trac.osgeo.org/gdal/browser/trunk/gdal/ogr/ogrsf_frmts/vfk/vfkreader.cpp#L125
+
     @param idx line index
     @param line line string
     """
