@@ -37,8 +37,8 @@ def open_vfk(filename):
     @return OGR datasource
     """
     ds = ogr.Open(filename)
-     if ds is None:
-         fatal_error("Unable to open '%s'" % filename)
+    if ds is None:
+        fatal_error("Unable to open '%s'" % filename)
     
     return ds
 
@@ -50,18 +50,24 @@ def fatal_error(message):
     sys.exit(message + os.linesep)
 
 def main():
+    # initialize OGR library for this script
+    init_ogr()
+    
     # open VFK file as an OGR datasource
     ds = open_vfk(INPUT_VFK)
-
+    
     # get list of OGR layers (ie. VFK blocks &B)
     nlayers = ds.GetLayerCount()
     for lidx in range(nlayers):
         layer =  ds.GetLayer(lidx)
-        print "Reading %s..." % layer.GetName()
+        if not layer:
+            fatal_error("Unable to get %d layer" % lidx)
+        print "Reading %s ... %d features detected" % \
+            (layer.GetName(), layer.GetFeatureCount())
     
     # close OGR datasource (flush memory)
     ds.Destroy()
-
+    
     return 0
 
 if __name__ == "__main__":
