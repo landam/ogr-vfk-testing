@@ -27,7 +27,7 @@ def init_ogr():
     # overwrite existing SQLite database when reading VFK data
     os.environ['OGR_VFK_DB_OVERWRITE'] = 'YES'
     # enable debug messages (?)
-    os.environ['CPL_DEBUG'] = 'ON'
+    os.environ['CPL_DEBUG'] = 'OFF'
     
 def open_vfk(filename):
     """Open VFK file as an OGR datasource
@@ -62,7 +62,7 @@ def main():
         layer =  ds.GetLayer(lidx)
         if not layer:
             fatal_error("Unable to get %d layer" % lidx)
-        print "Reading %s ... %d features detected" % \
+        print "Reading %-6s ... %6d features detected" % \
             (layer.GetName(), layer.GetFeatureCount())
     
     # close OGR datasource (flush memory)
