@@ -10,6 +10,7 @@ No CLI interface. Change global variables below.
 
 import os
 import sys
+import time
 
 from osgeo import ogr
 
@@ -47,7 +48,10 @@ def fatal_error(message):
 
     @param message the message to be printed
     """
-    sys.exit(message + os.linesep)
+    sys.exit(message)
+
+def print_delimiter(delimiter = '-', num = 80):
+    print delimiter * num
 
 def check_vfk_line(idx, line):
     """Callback function to check line from VFK file
@@ -67,18 +71,32 @@ def main():
     # initialize OGR library for this script
     init_ogr()
     
+    t0 = time.clock()
+
     # open VFK file as an OGR datasource
+    print "Reading '%s'..." % INPUT_VFK
     ds = open_vfk(INPUT_VFK)
-    
+    print_delimiter()
+
     # get list of OGR layers (ie. VFK blocks &B)
     nlayers = ds.GetLayerCount()
     for lidx in range(nlayers):
         layer =  ds.GetLayer(lidx)
+        gtype = ogr.GeometryTypeToName(layer.GetGeomType()).lower()
+        if gtype == 'none':
+            gtype = ' ' * 8
+
         if not layer:
             fatal_error("Unable to get %d layer" % lidx)
-        print "Reading %-6s ... %6d features detected" % \
-            (layer.GetName(), layer.GetFeatureCount())
+        print "Fetching %-6s ... %6d %8s features detected" % \
+            (layer.GetName(), layer.GetFeatureCount(),
+             gtype)
     
+    print_delimiter()
+    print time.clock() - t0, "seconds process time"
+    print_delimiter()
+
+
     # close OGR datasource (flush memory)
     ds.Destroy()
     
