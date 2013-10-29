@@ -33,6 +33,8 @@ def init_ogr():
     os.environ['OGR_VFK_DB_OVERWRITE'] = 'YES'
     # enable debug messages (?)
     os.environ['CPL_DEBUG'] = 'OFF'
+    # enable read per data block (will be slower)
+    ### os.environ['OGR_VFK_DB_READ_ALL_BLOCKS'] = 'NO'
     
     # define custom error handler
     gdal.PushErrorHandler(error_handler)
@@ -105,7 +107,11 @@ def main():
 
         if not layer:
             fatal_error("Unable to get %d layer" % lidx)
+<<<<<<< HEAD
         print "Fetching %-6s ... %6d %12s features detected" % \
+=======
+        print "Fetching %-6s ... %6d %11s features detected" % \
+>>>>>>> 151c761ab259c564808663512d2987786a9cf970
             (layer.GetName(), layer.GetFeatureCount(),
              gtype)
     
