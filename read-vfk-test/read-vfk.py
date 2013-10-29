@@ -114,7 +114,7 @@ def main():
     print_delimiter()
     print time.clock() - t0, "seconds process time"
     print_delimiter()
-    print "Number of lines:"
+    print "Number of processed records:"
     for key, value in NUM_OF_LINES.iteritems():
         print "\t%s: %d" % (key, value)
     print_delimiter()
