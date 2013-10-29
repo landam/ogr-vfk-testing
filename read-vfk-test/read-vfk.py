@@ -107,11 +107,7 @@ def main():
 
         if not layer:
             fatal_error("Unable to get %d layer" % lidx)
-<<<<<<< HEAD
-        print "Fetching %-6s ... %6d %12s features detected" % \
-=======
         print "Fetching %-6s ... %6d %11s features detected" % \
->>>>>>> 151c761ab259c564808663512d2987786a9cf970
             (layer.GetName(), layer.GetFeatureCount(),
              gtype)
     
