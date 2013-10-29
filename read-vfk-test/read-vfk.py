@@ -29,6 +29,8 @@ def init_ogr():
     os.environ['OGR_VFK_DB_OVERWRITE'] = 'YES'
     # enable debug messages (?)
     os.environ['CPL_DEBUG'] = 'OFF'
+    # enable read per data block (will be slower)
+    ### os.environ['OGR_VFK_DB_READ_ALL_BLOCKS'] = 'NO'
     
 def open_vfk(filename):
     """Open VFK file as an OGR datasource
@@ -88,7 +90,7 @@ def main():
 
         if not layer:
             fatal_error("Unable to get %d layer" % lidx)
-        print "Fetching %-6s ... %6d %8s features detected" % \
+        print "Fetching %-6s ... %6d %11s features detected" % \
             (layer.GetName(), layer.GetFeatureCount(),
              gtype)
     
