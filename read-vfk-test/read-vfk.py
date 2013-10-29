@@ -12,12 +12,16 @@ import os
 import sys
 import time
 
-from osgeo import ogr
+from osgeo import ogr, gdal
 
 # global variables - input VFK file
 INPUT_VFK = os.path.join(os.environ['HOME'], 'geodata', 'vfk', 'exportvse.vfk')
 # global variables - output SQLite database
 OUTPUT_DB = os.path.join(os.environ['HOME'], 'geodata', 'vfk', 'exportvse.db')
+# global variables - check VFK line
+NUM_OF_LINES = { 'B' : 0,
+                 'D' : 0,
+                 'H' : 0 }                 
 
 def init_ogr():
     """Initialize OGR library - set environmental variables"""
@@ -29,6 +33,17 @@ def init_ogr():
     os.environ['OGR_VFK_DB_OVERWRITE'] = 'YES'
     # enable debug messages (?)
     os.environ['CPL_DEBUG'] = 'OFF'
+    
+    # define custom error handler
+    gdal.PushErrorHandler(error_handler)
+
+def error_handler(err_level, err_no, err_msg):
+    """Ignore errors and warnings
+
+    @todo: use logging
+    """
+    if err_level == 0 and err_no == 0:
+        check_vfk_line(0, err_msg)
     
 def open_vfk(filename):
     """Open VFK file as an OGR datasource
@@ -63,9 +78,11 @@ def check_vfk_line(idx, line):
     @param idx line index
     @param line line string
     """
-    # TODO: implement extra checks on the line
-    print "line index: %d" % idx
-    print "line      : %s" % line
+    try:
+        key = line[1]
+        NUM_OF_LINES[key] += 1
+    except (IndexError, KeyError):
+        pass
 
 def main():
     # initialize OGR library for this script
@@ -88,14 +105,17 @@ def main():
 
         if not layer:
             fatal_error("Unable to get %d layer" % lidx)
-        print "Fetching %-6s ... %6d %8s features detected" % \
+        print "Fetching %-6s ... %6d %12s features detected" % \
             (layer.GetName(), layer.GetFeatureCount(),
              gtype)
     
     print_delimiter()
     print time.clock() - t0, "seconds process time"
     print_delimiter()
-
+    print "Number of lines:"
+    for key, value in NUM_OF_LINES.iteritems():
+        print "\t%s: %d" % (key, value)
+    print_delimiter()
 
     # close OGR datasource (flush memory)
     ds.Destroy()
