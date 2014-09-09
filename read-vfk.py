@@ -96,10 +96,11 @@ def read_vfk(suppress_output=False):
         
         if not layer:
             fatal_error("Unable to get %d layer" % lidx)
+        
+        nfeat = layer.GetFeatureCount()
         if not suppress_output:
-            print "Fetching %-6s ... %6d %11s features detected" % \
-                (layer.GetName(), layer.GetFeatureCount(),
-                 gtype)
+            sys.stdout.write("Fetching %-6s ... %6d %11s features detected\n" % \
+                (layer.GetName(), nfeat, gtype))
     
     # close OGR datasource (flush memory)
     ds.Destroy()
