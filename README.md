@@ -15,4 +15,4 @@ Description:
 References (in Czech only):
 
 * http://freegis.fsv.cvut.cz/gwiki/VFK
-* http://freegis.fsv.cvut.cz/gwiki/ VFK / OGR driver
+* http://freegis.fsv.cvut.cz/gwiki/VFK_/_OGR_driver
