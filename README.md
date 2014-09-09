@@ -14,5 +14,5 @@ Description:
 
 References (in Czech only):
 
-* http://grass.fsv.cvut.cz/gwiki/VFK
-* http://grass.fsv.cvut.cz/gwiki/OGR_VFK_Driver
+* http://freegis.fsv.cvut.cz/gwiki/VFK
+* http://freegis.fsv.cvut.cz/gwiki/ VFK / OGR driver
